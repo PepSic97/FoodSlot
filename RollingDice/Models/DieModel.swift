@@ -7,8 +7,16 @@
 
 import Foundation
 
-struct Die: Identifiable, Codable {
-    let id = UUID()
-    let sides: Int
+struct Die {
+    var sides: Int
     var faceTexts: [String]
+
+    init(sides: Int, faceTexts: [String]? = nil) {
+        self.sides = sides
+        if let ft = faceTexts, ft.count == sides {
+            self.faceTexts = ft
+        } else {
+            self.faceTexts = Array(repeating: "", count: sides)
+        }
+    }
 }

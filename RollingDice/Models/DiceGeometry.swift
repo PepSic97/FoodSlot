@@ -8,8 +8,6 @@
 import SceneKit
 import UIKit
 
-/// Genera la geometria corretta per un dado in base al numero di facce.
-/// Usa solidi platonici (o equivalenti) per d4, d6, d8, d10, d12, d20.
 func geometryForDie(sides: Int, faceTexts: [String]) -> SCNGeometry {
     switch sides {
     case 4:

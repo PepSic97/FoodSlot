@@ -10,6 +10,9 @@ import SwiftUI
 struct DiceSelectionView: View {
     @State private var selectedSides = 6
     @State private var navigate = false
+    
+    // 🔹 Qui creiamo il dado come stato (così possiamo passarne il binding)
+    @State private var die = Die(sides: 6, faceTexts: Array(repeating: "", count: 6))
 
     let availableDice = [4, 6, 8, 10, 12, 20]
 
@@ -27,19 +30,18 @@ struct DiceSelectionView: View {
                 .pickerStyle(.wheel)
                 .frame(height: 150)
 
-                NavigationLink(
-                    destination: TextInputView(die: Die(sides: selectedSides, faceTexts: Array(repeating: "", count: selectedSides))),
-                    isActive: $navigate
-                ) {
-                    EmptyView()
-                }
-
                 Button("Avanti") {
+                    // 🔹 Aggiorniamo il dado con il numero corretto di facce
+                    die = Die(sides: selectedSides, faceTexts: Array(repeating: "", count: selectedSides))
                     navigate = true
                 }
                 .buttonStyle(.borderedProminent)
             }
             .padding()
+            .navigationDestination(isPresented: $navigate) {
+                TextInputView(die: $die)
+            }
         }
     }
 }
+

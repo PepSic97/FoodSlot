@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F88FE4002E9D41C200376230 /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = F88FE3FF2E9D41C200376230 /* GooglePlaces */; };
+		F88FE4022E9D41C200376230 /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F88FE4012E9D41C200376230 /* GooglePlacesSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		F88FE34A2E97C33200376230 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F88FE4002E9D41C200376230 /* GooglePlaces in Frameworks */,
+				F88FE4022E9D41C200376230 /* GooglePlacesSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +119,8 @@
 			);
 			name = RollingDice;
 			packageProductDependencies = (
+				F88FE3FF2E9D41C200376230 /* GooglePlaces */,
+				F88FE4012E9D41C200376230 /* GooglePlacesSwift */,
 			);
 			productName = RollingDice;
 			productReference = F88FE3372E97C32F00376230 /* RollingDice.app */;
@@ -195,6 +204,9 @@
 			);
 			mainGroup = F88FE32E2E97C32F00376230;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F88FE3D52E9D3E9300376230 /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F88FE3382E97C32F00376230 /* Products */;
 			projectDirPath = "";
@@ -400,6 +412,8 @@
 				DEVELOPMENT_TEAM = 4329X84WSG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "L'app usa la tua posizione per trovarti ristoranti adatti nelle vicinanze.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "L'app usa la tua posizione per mostrarti ristoranti vicini alla cucina selezionata.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -428,6 +442,8 @@
 				DEVELOPMENT_TEAM = 4329X84WSG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "L'app usa la tua posizione per trovarti ristoranti adatti nelle vicinanze.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "L'app usa la tua posizione per mostrarti ristoranti vicini alla cucina selezionata.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -558,6 +574,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F88FE3D52E9D3E9300376230 /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F88FE3FF2E9D41C200376230 /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F88FE3D52E9D3E9300376230 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
+		F88FE4012E9D41C200376230 /* GooglePlacesSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F88FE3D52E9D3E9300376230 /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlacesSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F88FE32F2E97C32F00376230 /* Project object */;
 }

@@ -11,15 +11,11 @@ import SceneKit
 struct DiceSceneView: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         let sceneView = SCNView()
-        
-        // Carica la scena con i dadi
         if let scene = SCNScene(named: "Dungeons_And_Dragons_Dice_Set.scn") {
             sceneView.scene = scene
             sceneView.allowsCameraControl = true
             sceneView.autoenablesDefaultLighting = true
             sceneView.backgroundColor = .black
-            
-            // Posiziona la camera se necessario
             if scene.rootNode.childNode(withName: "camera", recursively: true) == nil {
                 let cameraNode = SCNNode()
                 cameraNode.camera = SCNCamera()
