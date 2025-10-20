@@ -11,27 +11,40 @@ struct LandingView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 30) {
-                Text("🎲 DieApp")
-                    .font(.largeTitle)
-                    .bold()
-
-                NavigationLink("Tira un dado") {
-                    DiceSelectionView()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.blue)
-                .font(.title2)
-
-                NavigationLink("Storico Tiri") {
-                    RollHistoryView()
-                }
-                .buttonStyle(.bordered)
-                .tint(.gray)
-                .font(.title2)
-
-                Spacer()
+                titleView()
+                goToRoll()
+                goToHistory()
             }
             .padding()
         }
+    }
+}
+
+extension LandingView {
+    @ViewBuilder
+    private func titleView() -> some View {
+        Text("🎲 DieApp")
+            .font(.largeTitle)
+            .bold()
+    }
+    
+    @ViewBuilder
+    private func goToRoll() -> some View {
+        NavigationLink("Tira un dado") {
+            DiceSelectionView()
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(.blue)
+        .font(.title2)
+    }
+    
+    @ViewBuilder
+    private func goToHistory() -> some View {
+        NavigationLink("Storico Tiri") {
+            RollHistoryView()
+        }
+        .buttonStyle(.bordered)
+        .tint(.gray)
+        .font(.title2)
     }
 }

@@ -22,39 +22,14 @@ struct DiceRollView: View {
     @State private var currentResultIndex: Int?
     let motionManager = CMMotionManager()
     @StateObject private var locationManager = LocationManager()
-
+    
     @State private var navigateToRestaurants = false
-
+    
     var body: some View {
         VStack(spacing: 20) {
-            Text("Lancia il d\(die.sides)")
-                .font(.title)
-
-            SceneView(
-                scene: scene,
-                pointOfView: nil,
-                options: [],
-                preferredFramesPerSecond: 60,
-                antialiasingMode: .multisampling4X
-            )
-            .frame(width: 250, height: 250)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                guard !hasRolled else { return }
-                startDiceAnimation()
-            }
-
-            if let text = resultText {
-                Text("È uscito: \(text.capitalized)")
-                    .font(.title2)
-                    .multilineTextAlignment(.center)
-                    .padding()
-
-                Button("Cerca ristoranti vicini") {
-                    handleRestaurantNavigation()
-                }
-                .buttonStyle(.borderedProminent)
-            }
+            rollDiceView()
+            sceneDiceView()
+            resultTextView()
         }
         .onAppear {
             setupScene()
@@ -64,15 +39,65 @@ struct DiceRollView: View {
             motionManager.stopAccelerometerUpdates()
         }
         .navigationDestination(isPresented: $navigateToRestaurants) {
-            if let text = resultText {
-                RestaurantListView(food: text)
-            } else {
-                Text("Nessun risultato disponibile")
-            }
+            resultNavigationView()
         }
     }
+}
 
-    // MARK: - Permesso posizione + navigazione
+//MARK: Views
+extension DiceRollView {
+    @ViewBuilder
+    private func rollDiceView() -> some View {
+        Text("Lancia il d\(die.sides)")
+            .font(.title)
+    }
+    
+    @ViewBuilder
+    private func sceneDiceView() -> some View {
+        SceneView(
+            scene: scene,
+            pointOfView: nil,
+            options: [],
+            preferredFramesPerSecond: 60,
+            antialiasingMode: .multisampling4X
+        )
+        .frame(width: 250, height: 250)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            guard !hasRolled else { return }
+            startDiceAnimation()
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func resultTextView() -> some View {
+        if let text = resultText {
+            Text("È uscito: \(text.capitalized)")
+                .font(.title2)
+                .multilineTextAlignment(.center)
+                .padding()
+            
+            Button("Cerca ristoranti vicini") {
+                handleRestaurantNavigation()
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func resultNavigationView() -> some View {
+        if let text = resultText {
+            RestaurantListView(food: text)
+        } else {
+            Text("Nessun risultato disponibile")
+        }
+    }
+}
+
+//MARK: Functions
+extension DiceRollView {
     func handleRestaurantNavigation() {
         switch locationManager.authorizationStatus {
         case .notDetermined:
@@ -88,24 +113,23 @@ struct DiceRollView: View {
             navigateToRestaurants = true
         }
     }
-
-    // MARK: - Scene setup e animazioni
+    
     func setupScene() {
         scene = SCNScene()
         diceWrapperNode = SCNNode()
         scene.rootNode.addChildNode(diceWrapperNode)
-
+        
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
         cameraNode.position = SCNVector3(0, 0, 4.5)
         scene.rootNode.addChildNode(cameraNode)
-
+        
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
         lightNode.light?.type = .omni
         lightNode.position = SCNVector3(5, 5, 10)
         scene.rootNode.addChildNode(lightNode)
-
+        
         if let diceScene = SCNScene(named: "Dungeons_And_Dragons_Dice_Set.scn") {
             let nodeName = "d\(die.sides)"
             if let loadedNode = diceScene.rootNode.childNode(withName: nodeName, recursively: true) {
@@ -118,7 +142,7 @@ struct DiceRollView: View {
             }
         }
     }
-
+    
     func centerDice(_ node: SCNNode) {
         var minVec = SCNVector3Zero
         var maxVec = SCNVector3Zero
@@ -131,36 +155,36 @@ struct DiceRollView: View {
         node.pivot = SCNMatrix4MakeTranslation(center.x, center.y, center.z)
         node.position = SCNVector3Zero
     }
-
+    
     func startDiceAnimation(durationMultiplier: Double = 1.0) {
         guard !isRolling, let _ = diceNode else { return }
         isRolling = true
         hasRolled = true
-
+        
         let index = Int.random(in: 0..<die.sides)
         currentResultIndex = index
         let food = die.faceTexts[index].isEmpty ? "cibo \(index + 1)" : die.faceTexts[index]
-
+        
         diceWrapperNode.position = SCNVector3Zero
-
+        
         let randomX = Float.random(in: 0...Float.pi * 3)
         let randomY = Float.random(in: 0...Float.pi * 3)
         let finalRotation = SCNVector3(Float.pi/4 * Float(index), Float.pi/5 * Float(index), 0)
-
+        
         let rotateSequence = SCNAction.sequence([
             SCNAction.rotateBy(x: CGFloat(randomX), y: CGFloat(randomY), z: 0, duration: 0.8 * durationMultiplier),
             SCNAction.rotateTo(x: CGFloat(finalRotation.x), y: CGFloat(finalRotation.y), z: CGFloat(finalRotation.z),
                                duration: 0.4 * durationMultiplier, usesShortestUnitArc: true)
         ])
-
+        
         diceWrapperNode.runAction(rotateSequence)
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2 * durationMultiplier) {
             self.resultText = food
             self.isRolling = false
         }
     }
-
+    
     func startShakeDetection() {
         var lastShakeTime = Date.distantPast
         if motionManager.isAccelerometerAvailable {

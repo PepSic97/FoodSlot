@@ -14,20 +14,32 @@ struct FoodPickerRow: View {
 
     var body: some View {
         HStack {
-            Text(label)
-                .frame(width: 100, alignment: .leading)
-                .font(.subheadline)
-
+            textLabel()
             Spacer()
-
-            Picker(selection: $selection, label: Text(selection.isEmpty ? "Scegli" : selection)) {
-                ForEach(options, id: \.self) { food in
-                    Text(food).tag(food)
-                }
-            }
-            .pickerStyle(MenuPickerStyle())
-            .tint(.blue)
+            pickerView()
         }
         .padding(.horizontal)
+    }
+}
+
+//MARK: Views
+extension FoodPickerRow {
+    @ViewBuilder
+    private func textLabel() -> some View {
+        Text(label)
+            .frame(width: 100, alignment: .leading)
+            .font(.subheadline)
+    }
+    
+    @ViewBuilder
+    private func pickerView() -> some View {
+        Picker(selection: $selection, label: Text(selection.isEmpty ? "Scegli" : selection)) {
+            ForEach(options, id: \.self) { food in
+                Text(food).tag(food)
+            }
+        }
+        .pickerStyle(MenuPickerStyle())
+        .tint(.blue)
+
     }
 }

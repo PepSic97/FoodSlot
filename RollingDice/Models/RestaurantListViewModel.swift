@@ -18,8 +18,6 @@ class RestaurantListViewModel: ObservableObject {
     func fetchNearbyRestaurants(food: String, location: CLLocation) async {
         isLoading = true
         errorMessage = nil
-
-        // ✅ Reset risultati solo dopo aver impostato il loading
         restaurants = []
 
         let request = MKLocalSearch.Request()
@@ -37,14 +35,14 @@ class RestaurantListViewModel: ObservableObject {
             let items = response.mapItems
 
             if items.isEmpty {
-                errorMessage = nil // nessun errore, solo lista vuota
+                errorMessage = nil
             }
 
             restaurants = items.compactMap { item in
                 Restaurant(
                     name: item.name ?? "Sconosciuto",
                     address: item.placemark.title ?? "Indirizzo non disponibile",
-                    rating: Double.random(in: 3.5...5.0) // rating fittizio
+                    rating: Double.random(in: 3.5...5.0)
                 )
             }
 

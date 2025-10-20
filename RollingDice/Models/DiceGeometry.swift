@@ -31,7 +31,6 @@ func geometryForDie(sides: Int, faceTexts: [String]) -> SCNGeometry {
     }
 }
 
-/// Genera un’immagine con il testo centrato (per i materiali delle facce)
 func imageFromText(_ text: String) -> UIImage {
     let size = CGSize(width: 512, height: 512)
     UIGraphicsBeginImageContextWithOptions(size, false, 0)
@@ -54,7 +53,6 @@ func imageFromText(_ text: String) -> UIImage {
     return img
 }
 
-/// Crea materiali per ogni faccia
 func createMaterials(for texts: [String], faceCount: Int) -> [SCNMaterial] {
     var materials: [SCNMaterial] = []
     for i in 0..<faceCount {
@@ -92,29 +90,24 @@ func createTetrahedronGeometry(faceTexts: [String]) -> SCNGeometry {
 // MARK: - D8 (ottaedro)
 
 func createOctahedronGeometry(faceTexts: [String]) -> SCNGeometry {
-    // TODO: definire vertici e facce per l'ottaedro
-    // Suggerimento: vertici ±X, ±Y, ±Z e triangoli nord/sud + bordi
     return createPlaceholderGeometry(faceCount: 8, faceTexts: faceTexts)
 }
 
 // MARK: - D10 (bipiramide pentagonale)
 
 func createPentagonalBipyramidGeometry(faceTexts: [String]) -> SCNGeometry {
-    // TODO: definire vertici per bipiramide pentagonale
     return createPlaceholderGeometry(faceCount: 10, faceTexts: faceTexts)
 }
 
 // MARK: - D12 (dodecaedro)
 
 func createDodecahedronGeometry(faceTexts: [String]) -> SCNGeometry {
-    // TODO: vertici e pentagoni per il dodecaedro
     return createPlaceholderGeometry(faceCount: 12, faceTexts: faceTexts)
 }
 
 // MARK: - D20 (icosaedro)
 
 func createIcosahedronGeometry(faceTexts: [String]) -> SCNGeometry {
-    // TODO: vertici e triangoli per l'icosaedro
     return createPlaceholderGeometry(faceCount: 20, faceTexts: faceTexts)
 }
 
@@ -142,7 +135,6 @@ func createGeometry(vertices: [SCNVector3], indices: [Int32], faceTexts: [String
     return geom
 }
 
-/// Geometria "segnaposto" se non hai ancora definito la mesh
 func createPlaceholderGeometry(faceCount: Int, faceTexts: [String]) -> SCNGeometry {
     let sphere = SCNSphere(radius: 1.0)
     sphere.materials = createMaterials(for: faceTexts, faceCount: faceCount)
