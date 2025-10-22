@@ -412,6 +412,7 @@
 				DEVELOPMENT_TEAM = 4329X84WSG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = FoodSlot;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "L'app usa la tua posizione per trovarti ristoranti adatti nelle vicinanze.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "L'app usa la tua posizione per mostrarti ristoranti vicini alla cucina selezionata.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -442,6 +443,7 @@
 				DEVELOPMENT_TEAM = 4329X84WSG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = FoodSlot;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "L'app usa la tua posizione per trovarti ristoranti adatti nelle vicinanze.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "L'app usa la tua posizione per mostrarti ristoranti vicini alla cucina selezionata.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

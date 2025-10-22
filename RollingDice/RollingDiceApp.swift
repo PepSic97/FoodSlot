@@ -13,7 +13,7 @@ struct RollingDiceApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LandingView()
+            LandingPageView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
