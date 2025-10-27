@@ -39,7 +39,7 @@ extension LandingPageView {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                Text("Fai girare la ruota e scopri cosa mangiare!")
+                Text("Scopri cosa mangiare!")
                     .multilineTextAlignment(.center)
                     .foregroundColor(.secondary)
                 
