@@ -9,16 +9,23 @@ import SwiftUI
 
 struct LandingPageView: View {
     init() {
-        // Imposta il colore blu per la tab bar (accent color)
         UITabBar.appearance().unselectedItemTintColor = UIColor.gray
     }
 
     var body: some View {
-        TabView {
-            spinTab()
-            historyTab()
+        VStack{
+            TabView {
+                spinTab()
+                historyTab()
+            }
+            .tint(.blue)
         }
-        .tint(.blue)
+        .background {
+            Image("food")
+                .ignoresSafeArea()
+                .scaledToFill()
+        }
+        .padding()
     }
 }
 

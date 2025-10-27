@@ -20,6 +20,7 @@ struct WheelView: View {
     
     @State private var currentIndex = 0
     @State private var timer: Timer? = nil
+    @State private var slotColor: Color = .blue
     
     var body: some View {
         VStack(spacing: 20) {
@@ -54,12 +55,14 @@ extension WheelView {
     private func slotView() -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.black.opacity(0.85))
+                .fill(slotColor.gradient.opacity(0.9)) // <-- sfumatura leggera
                 .frame(width: 160, height: 120)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.gray, lineWidth: 3)
+                        .stroke(Color.white.opacity(0.6), lineWidth: 3)
                 )
+                .shadow(radius: 8)
+                .animation(.easeInOut(duration: 0.25), value: slotColor) // <-- animazione fluida del colore
             
             VStack(spacing: 0) {
                 ForEach(displayedOptions(), id: \.self) { item in
@@ -84,7 +87,6 @@ extension WheelView {
             .clipped()
         }
         .frame(height: 120)
-
     }
     
     
@@ -121,9 +123,9 @@ extension WheelView {
             RestaurantListView(food: result)
         }
         .buttonStyle(.borderedProminent)
-
     }
 }
+
 // MARK: - Functions
 extension WheelView {
     private func displayedOptions() -> [String] {
@@ -142,13 +144,16 @@ extension WheelView {
         hasPlayed = true
         result = nil
         
-        let totalSpins = Int.random(in: 30...50)
+        let totalSpins = Int.random(in: 35...55)
         var spins = 0
         
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { t in
             spins += 1
             currentIndex = (currentIndex + 1) % options.count
+            
+            // Cambia colore gradualmente
+            slotColor = randomBrightColor()
             
             if spins >= totalSpins {
                 t.invalidate()
@@ -165,6 +170,11 @@ extension WheelView {
         history.append(selected)
         saveResultToCoreData(selected)
         isSpinning = false
+        
+        // Colore finale morbido e casuale
+        withAnimation(.easeInOut(duration: 0.8)) {
+            slotColor = randomBrightColor()
+        }
     }
     
     private func saveResultToCoreData(_ value: String) {
@@ -177,5 +187,14 @@ extension WheelView {
         } catch {
             print("Errore salvataggio risultato: \(error)")
         }
+    }
+    
+    /// Genera un colore casuale vivace ma bilanciato
+    private func randomBrightColor() -> Color {
+        Color(
+            hue: Double.random(in: 0...1),
+            saturation: 0.8,
+            brightness: 0.9
+        )
     }
 }
